@@ -169,11 +169,11 @@
                 <div>
                     <h3 class="text-xl text-gray-800 mb-3 uppercase font-medium">Categories</h3>
                     <div class="space-y-2">
-                        <div v-for="category in categories" :key="category.id" class="flex items-center">
+                        <div v-for="category in categories" class="flex items-center">
                             <input type="checkbox" name="cat-1" id="cat-1"
                                 class="text-primary focus:ring-0 rounded-sm cursor-pointer">
-                            <label for="cat-1" class="text-gray-600 ml-3 cusror-pointer">{{ category.name }}</label>
-                            <div class="ml-auto text-gray-600 text-sm">({{ category.item_count }})</div>
+                            <label for="cat-1" class="text-gray-600 ml-3 cusror-pointer">{{category.name}}</label>
+                            <div class="ml-auto text-gray-600 text-sm">({{category.item_count}})</div>
                         </div>
                     </div>
                 </div>
@@ -254,29 +254,10 @@
 
         <!-- products -->
         <div class="col-span-3">
-            <div class="flex items-center mb-4">
-                <select name="sort" id="sort"
-                    class="w-44 text-sm text-gray-600 py-3 px-4 border-gray-300 shadow-sm rounded focus:ring-primary focus:border-primary">
-                    <option v-for="category in categories" :key="category.id" value="price-low-to-high">{{ category.name }}</option>
-                </select>
-
-                <div class="flex gap-2 ml-auto">
-                    <div
-                        class="border border-primary w-10 h-9 flex items-center justify-center text-white bg-primary rounded cursor-pointer">
-                        <i class="fa-solid fa-grip-vertical"></i>
-                    </div>
-                    <div
-                        class="border border-gray-300 w-10 h-9 flex items-center justify-center text-gray-600 rounded cursor-pointer">
-                        <i class="fa-solid fa-list"></i>
-                    </div>
-                </div>
-            </div>
-
             <div class="grid md:grid-cols-3 grid-cols-2 gap-6">
                 <div v-for="product in products" :key="product.id" class="bg-white shadow rounded overflow-hidden group">
                     <div class="relative">
-                        <!-- <img src="../../public/image/products/nasgor_jancuk.jpg" alt="product 1" class="w-full"> -->
-                        <img :src="URL+product.image" alt="product 1" class="w-full">
+                        <img :src="url+product.image" :alt="product.name" class="w-full">
                         <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center 
                         justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
                             <a href="#"
@@ -288,11 +269,10 @@
                     </div>
                     <div class="pt-4 pb-3 px-4">
                         <a href="#">
-                            <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">
-                                {{ product.name }}</h4>
+                            <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">{{product.name}}</h4>
                         </a>
                         <div class="flex items-baseline mb-1 space-x-2">
-                            <p class="text-xl text-primary font-semibold">Rp {{ product.price }}</p>
+                            <p class="text-xl text-primary font-semibold">{{product.Price}}</p>
                         </div>
                         <div class="flex items-center">
                             <div class="flex gap-1 text-sm text-yellow-400">
@@ -305,7 +285,7 @@
                             <div class="text-xs text-gray-500 ml-3">(150)</div>
                         </div>
                     </div>
-                    <RouterLink to="/checkout" class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">Add Cart</RouterLink>
+                    <RouterLink to="`/checkout//${product.id}`" class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">Add Cart</RouterLink>
                 </div>
             </div>
         </div>
@@ -316,34 +296,36 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
-import { getProducts } from '../api/product'
-import { getCategories } from '../api/category'
+import {ref, onMounted} from 'vue';
+import {RouterLink} from 'vue-router';
+import {getProducts} from '../api/product';
+import {getCategories} from '../api/category'
 
-const URL = 'http://127.0.0.1:8000/storage/products/'
-
+const url = 'http://127.0.0.1:8000/storage/products/'
 const products = ref([])
-const categories = ref([])
+const categories = ref([]) 
 
-onMounted(async () => {
+onMounted(async () =>{
     await setProducts()
-    await setCategories()
+    await setCategory()
 })
 
-const setProducts = async () => {
-    const response = await getProducts()
 
-    if(response.data.status) {
-        products.value = response.data.products
-    }
-}
-
-const setCategories = async () => {
+const setCategory = async () =>{
     const response = await getCategories()
-
-    if(response.data.status) {
+    if(response.data.status){
         categories.value = response.data.categories
+    }else{
+
     }
 }
 
+const setProducts = async () =>{
+    const response = await getProducts()
+    if(response.data.status){
+        products.value = response.data.products
+    }else{
+        
+    }
+}
 </script>
