@@ -67,7 +67,7 @@
                     <RouterLink to="/about" class="text-gray-200 hover:text-white transition">About Us</RouterLink>
                     <RouterLink to="/contact" class="text-gray-200 hover:text-white transition">Contact Us</RouterLink>
                 </div>
-                <RouterLink to="/login" class="text-gray-200 hover:text-white transition">Login</RouterLink>
+                <RouterLink :to="isLoggedIn() ? '/logout' : '/login'" class="text-gray-200 hover:text-white transition">{{ isLoggedIn() ? 'Logout' : 'Login' }}</RouterLink>
             </div>
         </div>
     </nav>
@@ -76,4 +76,5 @@
 
 <script setup>
 import { RouterLink } from 'vue-router';
+import { isLoggedIn } from '../utils/auth';
 </script>
