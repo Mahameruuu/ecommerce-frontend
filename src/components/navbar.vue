@@ -91,6 +91,8 @@
 <script setup>
 import { ref } from 'vue';
 import { RouterLink } from 'vue-router';
+import { isLoggedIn } from '../utils/auth';
+
 const showSidebar = ref(false);
 
 const toggleSidebar = () => {

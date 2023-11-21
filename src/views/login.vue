@@ -6,21 +6,17 @@
             <p class="text-gray-600 mb-6 text-sm">
                 Welcome Back Customer
             </p>
-        <form @submit.prevent="loginUser" autocomplete="off">
-            <p v-if="loginError" class="text-red-500 mt-2">Login failed. Please check your credentials.</p>
-        </form>
-    
-            <form action="#" method="post" autocomplete="off">
+            <form @submit.prevent="loginClick">
                 <div class="space-y-2">
                     <div>
                         <label for="email" class="text-gray-600 mb-2 block">Email address</label>
-                        <input type="email" name="email" id="email"
+                        <input type="email" name="email" id="email" v-model="email" required
                             class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
                             placeholder="youremail.@domain.com">
                     </div>
                     <div>
                         <label for="password" class="text-gray-600 mb-2 block">Password</label>
-                        <input type="password" name="password" id="password"
+                        <input type="password" name="password" id="password" v-model="password" required
                             class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
                             placeholder="*******">
                     </div>
@@ -34,8 +30,15 @@
                     <a href="#" class=" hidden sm:block text-primary">Forgot password</a>
                 </div>
                 <div class="mt-4">
-                    <button type="submit"
-                        class="block w-full py-2 text-center text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium">Login</button>
+                    <input 
+                        type="submit"
+                        :value="isLoading ? 'Loading...' : 'Login'"
+                        :disabled="isLoading"
+                        class="block w-full py-2 text-center text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium"   
+                    >
+                    <!-- <button type="submit"
+                        disabled
+                        class="block w-full py-2 text-center text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium">Login</button> -->
                 </div>
             </form>
 
@@ -61,19 +64,35 @@
 </template>
 
 <script setup>
-
 import { ref } from 'vue';
+import { useRouter } from 'vue-router'
+import { login } from '../api/auth'
+import { setToken, isLoggedIn } from '../utils/auth'
 
-const email = ref('');
-const password = ref('');
-const loginError = ref(false);
+const router = useRouter()
 
-function loginUser() {
-  if (email.value === 'example@email.com' && password.value === 'password') {
-    loginError.value = false;
-    alert('Login successful! Redirecting...');
-  } else {
-    loginError.value = true;
-  }
+const email = ref(null)
+const password = ref(null)
+
+const isLoading = ref(false)
+
+const loginClick = async () => {
+    isLoading.value = true
+    try {
+        const response = await login({
+            'email': email.value,
+            'password': password.value,
+        })
+
+        if(response.data.status) {
+            setToken(response.data.token)
+            if(isLoggedIn()) {
+                router.push('/')
+            }
+        }
+    } catch (error) {
+        console.log(error.response.data.message)
+    }
+    isLoading.value = false
 }
 </script>

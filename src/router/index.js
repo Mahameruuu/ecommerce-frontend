@@ -5,6 +5,11 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      path: '/:pathMatch(.*)*',
+      name: 'pageNotFound',
+      component: () => import('../views/pageNotFound.vue'),
+    },
+    {
       path: '/',
       name: 'Dashboard',
       component: () => import ("../views/dashboard.vue")
@@ -18,6 +23,11 @@ const router = createRouter({
       path:'/login',
       name:'Login',
       component: () => import('../views/login.vue')
+    },
+    {
+      path:'/logout',
+      name:'Logout',
+      component: () => import('../views/logout.vue')
     },
     {
       path:'/register',
