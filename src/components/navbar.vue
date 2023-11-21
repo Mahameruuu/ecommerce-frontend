@@ -37,43 +37,63 @@
     <!-- navbar -->
     <nav class="bg-gray-800">
         <div class="container flex">
-            <div class="px-8 py-4 bg-primary md:flex items-center cursor-pointer relative group hidden">
-                <span class="text-white">
-                    <i class="fa-solid fa-bars"></i>
-                </span>
-                <span class="capitalize ml-2 text-white hidden">All Categories</span>
-
-                <!-- dropdown -->
-                <div
-                    class="absolute w-full left-0 top-full bg-white shadow-md py-3 divide-y divide-gray-300 divide-dashed opacity-0 group-hover:opacity-100 transition duration-300 invisible group-hover:visible">
-                    <a href="#" class="flex items-center px-6 py-3 hover:bg-gray-100 transition">
-                        <img src="assets/images/icons/sofa.svg" alt="sofa" class="w-5 h-5 object-contain">
-                        <span class="ml-6 text-gray-600 text-sm">Food</span>
-                    </a>
-                    <a href="#" class="flex items-center px-6 py-3 hover:bg-gray-100 transition">
-                        <img src="assets/images/icons/terrace.svg" alt="terrace" class="w-5 h-5 object-contain">
-                        <span class="ml-6 text-gray-600 text-sm">Drink</span>
-                    </a>
-                    <a href="#" class="flex items-center px-6 py-3 hover:bg-gray-100 transition">
-                        <img src="assets/images/icons/bed.svg" alt="bed" class="w-5 h-5 object-contain">
-                        <span class="ml-6 text-gray-600 text-sm">Snack</span>
-                    </a>
-                </div>
-            </div>    
-            <div class="flex items-center justify-between flex-grow md:pl-12 py-5">
-                <div class="flex items-center space-x-6 capitalize">
+             <!-- Sidebar button for mobile -->
+        <button @click="toggleSidebar" class="px-4 py-2 text-white md:hidden">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        
+         <!-- Sidebar for mobile -->
+        <div v-if="showSidebar" class="fixed top-0 left-0 h-screen w-64 bg-gray-800 z-50">
+            <div class="py-4 px-8">
+                <!-- All Categories button -->
+                <button @click="toggleSidebar" class="text-white">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+                <div class="text-white mt-4">
+                    <h2 class="text-xl font-bold">All Categories</h2>
+                    <br>
                     <RouterLink to="/" class="text-gray-200 hover:text-white transition">Home</RouterLink>
-                    <RouterLink to="/shop" class="text-gray-200 hover:text-white transition">Shop</RouterLink>
-                    <RouterLink to="/about" class="text-gray-200 hover:text-white transition">About Us</RouterLink>
-                    <RouterLink to="/contact" class="text-gray-200 hover:text-white transition">Contact Us</RouterLink>
                 </div>
-                <RouterLink to="/login" class="text-gray-200 hover:text-white transition">Login</RouterLink>
+                <div class="text-white mt-4">    
+                <RouterLink to="/shop" class="text-gray-200 hover:text-white transition">Shop</RouterLink>
+                </div>
+                <div class="text-white mt-4">
+                <RouterLink to="/about" class="text-gray-200 hover:text-white transition">About Us</RouterLink>
+                </div>
+                <div class="text-white mt-4">    
+                <RouterLink to="/contact" class="text-gray-200 hover:text-white transition">Contact Us</RouterLink>
+                    <!-- Dropdown content here -->
+                </div>
             </div>
+        </div>
+        <div class="px-8 py-4 bg-primary md:flex items-center cursor-pointer relative group hidden">
+            <span class="text-white">
+                <i class="fa-solid fa-bars"></i>
+            </span>
+            <span class="capitalize ml-2 text-white hidden">All Categories</span>
+        </div>    
+
+        <!-- navbar -->
+        <div class="flex items-center justify-between flex-grow md:pl-12 py-5">
+            <div class="flex items-center space-x-6 capitalize">
+                <RouterLink to="/" class="text-gray-200 hover:text-white transition">Home</RouterLink>
+                <RouterLink to="/shop" class="text-gray-200 hover:text-white transition">Shop</RouterLink>
+                <RouterLink to="/about" class="text-gray-200 hover:text-white transition">About Us</RouterLink>
+                <RouterLink to="/contact" class="text-gray-200 hover:text-white transition">Contact Us</RouterLink>
+            </div>
+            <RouterLink to="/login" class="text-gray-200 hover:text-white transition">Login</RouterLink>
+        </div>
         </div>
     </nav>
     <!-- ./navbar -->
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import { RouterLink } from 'vue-router';
+const showSidebar = ref(false);
+
+const toggleSidebar = () => {
+  showSidebar.value = !showSidebar.value;
+};
 </script>

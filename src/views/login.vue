@@ -6,6 +6,10 @@
             <p class="text-gray-600 mb-6 text-sm">
                 Welcome Back Customer
             </p>
+        <form @submit.prevent="loginUser" autocomplete="off">
+            <p v-if="loginError" class="text-red-500 mt-2">Login failed. Please check your credentials.</p>
+        </form>
+    
             <form action="#" method="post" autocomplete="off">
                 <div class="space-y-2">
                     <div>
@@ -58,4 +62,18 @@
 
 <script setup>
 
+import { ref } from 'vue';
+
+const email = ref('');
+const password = ref('');
+const loginError = ref(false);
+
+function loginUser() {
+  if (email.value === 'example@email.com' && password.value === 'password') {
+    loginError.value = false;
+    alert('Login successful! Redirecting...');
+  } else {
+    loginError.value = true;
+  }
+}
 </script>
