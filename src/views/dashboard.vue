@@ -240,9 +240,9 @@
     <div class="container pb-16">
         <h2 class="text-2xl font-medium text-gray-800 uppercase mb-6">recomended for you</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div class="bg-white shadow rounded overflow-hidden group">
+            <div v-for="product in products" :key="product.id" class="bg-white shadow rounded overflow-hidden group">
                 <div class="relative">
-                    <img src="../../public/image/products/nasgor_jancuk.jpg" alt="product 1" class="w-full">
+                    <img :src="url+product.image" :alt="product.name" class="w-full">
                     <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center 
                     justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
                         <a href="#"
@@ -259,10 +259,10 @@
                 </div>
                 <div class="pt-4 pb-3 px-4">
                     <a href="#">
-                        <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">Nasi Goreng Jancuk</h4>
+                        <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">{{product.name}}</h4>
                     </a>
                     <div class="flex items-baseline mb-1 space-x-2">
-                        <p class="text-xl text-primary font-semibold">Rp 30.000</p>
+                        <p class="text-xl text-primary font-semibold">Rp {{product.price}}</p>
                     </div>
                     <div class="flex items-center">
                         <div class="flex gap-1 text-sm text-yellow-400">
@@ -275,288 +275,8 @@
                         <div class="text-xs text-gray-500 ml-3">(150)</div>
                     </div>
                 </div>
-                <a href="/public/pages/checkout.html"
-                    class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">Add
-                    to cart</a>
-            </div>
-            <div class="bg-white shadow rounded overflow-hidden group">
-                <div class="relative">
-                    <img src="../../public/image/products/nasgor_kambing.jpeg" alt="product 2" class="w-full">
-                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center 
-                    justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="view product">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </a>
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="add to wishlist">
-                            <i class="fa-solid fa-heart"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="pt-4 pb-3 px-4">
-                    <a href="#">
-                        <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">Nasi Goreng Kambing</h4>
-                    </a>
-                    <div class="flex items-baseline mb-1 space-x-2">
-                        <p class="text-xl text-primary font-semibold">Rp 30.000</p>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="flex gap-1 text-sm text-yellow-400">
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                        </div>
-                        <div class="text-xs text-gray-500 ml-3">(150)</div>
-                    </div>
-                </div>
-                <a href="/public/pages/checkout.html"
-                    class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">Add
-                    to cart</a>
-            </div>
-            <div class="bg-white shadow rounded overflow-hidden group">
-                <div class="relative">
-                    <img src="../../public/image/products/nasgor_sosis.jpeg" alt="product 3" class="w-full">
-                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center 
-                    justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="view product">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </a>
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="add to wishlist">
-                            <i class="fa-solid fa-heart"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="pt-4 pb-3 px-4">
-                    <a href="#">
-                        <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">
-                            Nasi Goreng Sosis</h4>
-                    </a>
-                    <div class="flex items-baseline mb-1 space-x-2">
-                        <p class="text-xl text-primary font-semibold">Rp 30.000</p>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="flex gap-1 text-sm text-yellow-400">
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                        </div>
-                        <div class="text-xs text-gray-500 ml-3">(150)</div>
-                    </div>
-                </div>
-                <a href="/public/pages/checkout.html"
-                    class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">Add
-                    to cart</a>
-            </div>
-            <div class="bg-white shadow rounded overflow-hidden group">
-                <div class="relative">
-                    <img src="../../public/image/products/nasgor_jawa.jpeg" alt="product 4" class="w-full">
-                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center 
-                    justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="view product">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </a>
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="add to wishlist">
-                            <i class="fa-solid fa-heart"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="pt-4 pb-3 px-4">
-                    <a href="#">
-                        <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">
-                            Nasi Goreng Jawir</h4>
-                    </a>
-                    <div class="flex items-baseline mb-1 space-x-2">
-                        <p class="text-xl text-primary font-semibold">Rp 25.000</p>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="flex gap-1 text-sm text-yellow-400">
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                        </div>
-                        <div class="text-xs text-gray-500 ml-3">(150)</div>
-                    </div>
-                </div>
-                <a href="/public/pages/checkout.html"
-                    class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">Add
-                    to cart</a>
-            </div>
-            <div class="bg-white shadow rounded overflow-hidden group">
-                <div class="relative">
-                    <img src="../../public/image/products/esteh.jpeg" alt="product 5" class="w-full">
-                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center 
-                    justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="view product">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </a>
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="add to wishlist">
-                            <i class="fa-solid fa-heart"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="pt-4 pb-3 px-4">
-                    <a href="#">
-                        <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">
-                            Es Teh</h4>
-                    </a>
-                    <div class="flex items-baseline mb-1 space-x-2">
-                        <p class="text-xl text-primary font-semibold">Rp 5.000</p>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="flex gap-1 text-sm text-yellow-400">
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                        </div>
-                        <div class="text-xs text-gray-500 ml-3">(150)</div>
-                    </div>
-                </div>
-                <a href="/public/pages/checkout.html"
-                    class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">Add
-                    to cart</a>
-            </div>
-            <div class="bg-white shadow rounded overflow-hidden group">
-                <div class="relative">
-                    <img src="../../public/image/products/esjeruk.jpeg" alt="product 6" class="w-full">
-                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center 
-                    justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="view product">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </a>
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="add to wishlist">
-                            <i class="fa-solid fa-heart"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="pt-4 pb-3 px-4">
-                    <a href="#">
-                        <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">
-                            Es Jeruk</h4>
-                    </a>
-                    <div class="flex items-baseline mb-1 space-x-2">
-                        <p class="text-xl text-primary font-semibold">Rp 5.000</p>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="flex gap-1 text-sm text-yellow-400">
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                        </div>
-                        <div class="text-xs text-gray-500 ml-3">(150)</div>
-                    </div>
-                </div>
-                <a href="/public/pages/checkout.html"
-                    class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">Add
-                    to cart</a>
-            </div>
-            <div class="bg-white shadow rounded overflow-hidden group">
-                <div class="relative">
-                    <img src="../../public/image/products/kentang.jpeg" alt="product 7" class="w-full">
-                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center 
-                    justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="view product">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </a>
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="add to wishlist">
-                            <i class="fa-solid fa-heart"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="pt-4 pb-3 px-4">
-                    <a href="#">
-                        <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">
-                            Kentang Goreng</h4>
-                    </a>
-                    <div class="flex items-baseline mb-1 space-x-2">
-                        <p class="text-xl text-primary font-semibold">RP 10.000</p>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="flex gap-1 text-sm text-yellow-400">
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                        </div>
-                        <div class="text-xs text-gray-500 ml-3">(150)</div>
-                    </div>
-                </div>
-                <a href="/public/pages/checkout.html"
-                    class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">Add
-                    to cart</a>
-            </div>
-            <div class="bg-white shadow rounded overflow-hidden group">
-                <div class="relative">
-                    <img src="../../public/image/products/tahu.jpeg" alt="product 8" class="w-full">
-                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center 
-                    justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="view product">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </a>
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="add to wishlist">
-                            <i class="fa-solid fa-heart"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="pt-4 pb-3 px-4">
-                    <a href="#">
-                        <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">
-                            Tahu Krispi</h4>
-                    </a>
-                    <div class="flex items-baseline mb-1 space-x-2">
-                        <p class="text-xl text-primary font-semibold">Rp 10.000</p>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="flex gap-1 text-sm text-yellow-400">
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                        </div>
-                        <div class="text-xs text-gray-500 ml-3">(150)</div>
-                    </div>
-                </div>
-                <a href="/public/pages/checkout.html"
-                    class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">Add
-                    to cart</a>
+                <RouterLink to="/checkout" class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent 
+                hover:text-primary transition">Add Cart</RouterLink>
             </div>
         </div>
     </div>
@@ -564,5 +284,22 @@
 </template>
 
 <script setup>
+import {ref, onMounted} from 'vue';
+import {getProducts} from '../api/product';
 
+const url = 'http://127.0.0.1:8000/storage/products/'
+const products = ref([]) 
+
+onMounted(async () =>{
+    await setProducts()
+})
+
+const setProducts = async () =>{
+    const response = await getProducts()
+    if(response.data.status){
+        products.value = response.data.products
+    }else{
+        
+    }
+}
 </script>

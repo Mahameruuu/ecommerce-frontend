@@ -13,17 +13,17 @@
                         <p>Keranjang Belanja Anda Kosong</p>
                     </div>
                     <div class="flex justify-center py-6">
-                        <button class="text-white bg-red-500 p-2 rounded">Belanja Sekarang</button>
+                            <RouterLink to="/checkout" class="text-white bg-red-500 p-2 rounded">Belanja Sekarang</RouterLink>
                     </div>
                 </div>
         </div>
     </div>
     <div class="flex items-center justify-between flex-grow md:pl-32">
         <div class="flex items-center space-x-6 capitalize">
-           <h2>KAMU MUNGKIN JUGA SUKA</h2>
+           <h2 class="text-gray-500">KAMU MUNGKIN JUGA SUKA</h2>
         </div>
         <div class="px-36 text-primary">
-            <button @click="showAllProducts">Lihat Semua > </button>
+            <RouterLink to="/recommend">Lihat Semua > </RouterLink>
         </div>
     </div>
 
@@ -86,7 +86,7 @@
                             <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">{{product.name}}</h4>
                         </a>
                         <div class="flex items-baseline mb-1 space-x-2">
-                            <p class="text-xl text-primary font-semibold">{{product.price}}</p>
+                            <p class="text-xl text-primary font-semibold">Rp {{product.price}}</p>
                         </div>
                         <div class="flex items-center">
                             <div class="flex gap-1 text-sm text-yellow-400">
@@ -123,14 +123,4 @@ const setProducts = async () =>{
         
     }
 }
-
-const showAllProducts = async () => {
-  const response = await getProducts()
-  if(response.data.status){
-      products.value = response.data.products
-  }else{
-    
-  }
-}
-
 </script>

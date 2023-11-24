@@ -70,14 +70,14 @@ const router = createRouter({
       component:() => import('../views/myorder.vue')
     },
     {
-      path:'/test',
-      name:'Test',
-      component:() => import('../views/test.vue')
+      path:'/cart',
+      name:'Cart',
+      component:() => import('../views/cart.vue')
     },
     {
-      path:'/basket',
-      name:'Basket',
-      component:() => import('../views/basket.vue')
+      path:'/recommend',
+      name:'Recommend',
+      component:() => import ('../views/recommend.vue')
     }
   ]
 })
