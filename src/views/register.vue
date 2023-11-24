@@ -6,47 +6,47 @@
             <p class="text-gray-600 mb-6 text-sm">
                 Register for new Costumer
             </p>
-            <form action="#" method="post" autocomplete="off">
+            <form @submit.prevent="registerClick">
                 <div class="space-y-2">
                     <div>
                         <label for="name" class="text-gray-600 mb-2 block">Full Name</label>
-                        <input type="text" name="name" id="name" v-model="data.name"
+                        <input type="text" name="name" id="name" v-model="data.name" required
                             class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
                             placeholder="fulan fulana">
                     </div>
                     <div>
                         <label for="email" class="text-gray-600 mb-2 block">Email address</label>
-                        <input type="email" name="email" id="email" v-model="data.email"
+                        <input type="email" name="email" id="email" v-model="data.email" required
                             class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
                             placeholder="youremail.@domain.com">
                     </div>
                     <div>
                         <label for="password" class="text-gray-600 mb-2 block">Password</label>
-                        <input type="password" name="password" id="password" v-model="data.password"
+                        <input type="password" name="password" id="password" v-model="data.password" required
                             class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
                             placeholder="*******">
                     </div>
                     <div>
                         <label for="confirm" class="text-gray-600 mb-2 block">Confirm password</label>
-                        <input type="password" name="confirm" id="confirm" v-model="data.confirmPassword"
+                        <input type="password" name="confirm" id="confirm" v-model="data.confirmPassword" required
                             class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
                             placeholder="*******">
                     </div>
                     <div>
                         <label for="date" class="text-gray-600 mb-2 block">Birth Day</label>
-                        <input type="date" name="date" id="date" v-model="data.birth_date"
+                        <input type="date" name="date" id="date" v-model="data.birth_date" required
                             class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400">
                     </div>
                     <div>
                         <label for="phone_number" class="text-gray-600 mb-2 block">Phone Number</label>
-                        <input type="text" name="phone_number" id="phone_number" v-model="data.phone_number"
+                        <input type="text" name="phone_number" id="phone_number" v-model="data.phone_number" required
                             class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
                             placeholder="085">
                     </div>
                     <div>
                         <label for="address" class="text-gray-600 mb-2 block">Address</label>
                         <textarea name="address" id="address" v-model="data.address" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
-                            placeholder="Surabaya" cols="30" rows="10"></textarea>
+                            placeholder="Surabaya" cols="30" rows="10" required></textarea>
                     </div>
                 </div>
                 <div class="mt-6">
@@ -58,9 +58,9 @@
                     </div>
                 </div>
                 <div class="mt-4">
-                    <button type="submit"
-                        class="block w-full py-2 text-center text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium">create
-                        account</button>
+                    <input type="submit" class="block w-full py-2 text-center text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium" 
+                    :value="isLoading ? 'loading...' : 'create account'"
+                    :disabled="isLoading">
                 </div>
             </form>
 
@@ -88,6 +88,11 @@
 <script setup>
 import {ref} from 'vue';
 import {register} from '../api/auth'
+import {setToken, isLoggedIn} from '../utils/auth'
+import {useRouter} from 'vue-router'
+
+const router = useRouter()
+const isLoading = ref(false)
 
 const data = ref({
     'email': '', 
@@ -100,10 +105,19 @@ const data = ref({
 })
 
 const registerClick = async () =>{
-    const response = await register(data)
-    if(response.data.status){
-        
+    isLoading.value = true
+    try{
+        const response = await register(data.value)
+        if(response.data.status){
+            setToken(response.data.token)
+            if(isLoggedIn()){
+                router.push('/')
+            }   
+        }
+    }catch(error){
+        console.log(error.response.data.message)
     }
+    isLoading.value = false
 }
 
 </script>

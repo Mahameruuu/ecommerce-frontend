@@ -6,19 +6,21 @@
             </a>
 
             <div class="w-full max-w-xl relative flex">
-                <input type="text" name="search" id="search"
-                    class="w-full border border-primary border-r-0 pl-12 py-3 pr-3 rounded-l-md focus:outline-none"
-                    placeholder="search">
-                    <button
-                    class="bg-primary border border-primary text-white px-8 rounded-r-md hover:bg-transparent hover:text-primary transition">Search</button>
+                <input v-model="searchTerm" type="text" name="search" id="search"
+                class="w-full border border-primary border-r-0 pl-12 py-3 pr-3 rounded-l-md focus:outline-none"
+                placeholder="search"/>
+                <button @click="filterProducts" 
+                class="bg-primary border border-primary text-white px-8 rounded-r-md hover:bg-transparent hover:text-primary transition">
+                Search
+                </button>
             </div>
-            
+
             <div class="flex items-center space-x-4">
-                <a href="#" class="text-center text-gray-700 hover:text-primary transition relative">
+                <a href="#" class="text- center text-gray-700 hover:text-primary transition relative">
                     <div class="text-2xl">
                         <i class="fa-solid fa-bag-shopping"></i>
                     </div>
-                    <div class="text-xs leading-3">Cart</div>
+                    <RouterLink to="/basket" class="text-xs leading-3">Cart</RouterLink>
                     <div
                         class="absolute -right-3 -top-1 w-5 h-5 rounded-full flex items-center justify-center bg-primary text-white text-xs">
                         2</div>
@@ -27,7 +29,7 @@
                     <div class="text-2xl">
                         <i class="fa-regular fa-user"></i>
                     </div>
-                    <RouterLink to="/account" class="text-xs leading-3">account</RouterLink>
+                    <RouterLink to="/account" class="text-xs leading-3">Account</RouterLink>
                 </a>
             </div>
         </div>
@@ -66,13 +68,7 @@
                 </div>
             </div>
         </div>
-        <div class="px-8 py-4 bg-primary md:flex items-center cursor-pointer relative group hidden">
-            <span class="text-white">
-                <i class="fa-solid fa-bars"></i>
-            </span>
-            <span class="capitalize ml-2 text-white hidden">All Categories</span>
-        </div>    
-
+        
         <!-- navbar -->
         <div class="flex items-center justify-between flex-grow md:pl-12 py-5">
             <div class="flex items-center space-x-6 capitalize">
@@ -86,16 +82,40 @@
         </div>
     </nav>
     <!-- ./navbar -->
+
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { RouterLink } from 'vue-router';
-import { isLoggedIn } from '../utils/auth';
+import { getProducts } from '../api/product';
 
 const showSidebar = ref(false);
+const searchTerm = ref('');
+const products = ref([]);
+
+onMounted(async () => {
+  await searchProducts();
+});
 
 const toggleSidebar = () => {
   showSidebar.value = !showSidebar.value;
+};
+
+const searchProducts = async () => {
+  const response = await getProducts();
+  if (response.data.status) {
+    products.value = response.data.products;
+    filterProducts();
+  }
+};
+
+const filterProducts = () => {
+  if (!searchTerm.value.trim()) {
+    return;
+  }
+  products.value = products.value.filter(product =>
+    product.name.toLowerCase().includes(searchTerm.value.toLowerCase())
+  );
 };
 </script>
