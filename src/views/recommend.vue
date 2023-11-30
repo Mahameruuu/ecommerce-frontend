@@ -2,6 +2,9 @@
     <div class="container py-26">
         <h1 class="my-5 flex justify-center text-3xl font-medium text-gray-500 uppercase mb-6 bg-center py-10">Kamu Mungkin Juga Suka</h1>
     </div>
+
+    <!-- Product -->
+    <div class="grid grid-cols-3">
         <div class="col-span-3">
             <div class="grid md:grid-cols-5 grid-cols-2 gap-20 px-32 py-5">
                 <div v-for="product in products" :key="product.id" class="bg-white shadow rounded overflow-hidden group">
@@ -37,6 +40,7 @@
                 </div>
             </div>
         </div>
+    </div>
 </template>
 
 <script setup>
