@@ -40,6 +40,7 @@
                         disabled
                         class="block w-full py-2 text-center text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium">Login</button> -->
                 </div>
+                <p v-if="errorMessage" class="mt-2 text-red-500 text-sm text-center">{{ errorMessage }}</p>
             </form>
 
             <!-- login with -->
@@ -60,6 +61,11 @@
             </p>
         </div>
     </div>
+    
+    <!-- audio login -->
+    <audio id="successSound" src="../../public/audio/KIW KIW CUKURUKUK SFX_vdpqL8V13N8.mp3"></audio>
+    <audio id="errorSound" src="../../public/audio/KIW KIW CUKURUKUK SFX_vdpqL8V13N8.mp3"></audio>
+
     <!-- ./login -->
 </template>
 
@@ -70,29 +76,89 @@ import { login } from '../api/auth'
 import { setToken, isLoggedIn } from '../utils/auth'
 
 const router = useRouter()
-
 const email = ref(null)
 const password = ref(null)
-
+const errorMessage = ref('')
 const isLoading = ref(false)
 
-const loginClick = async () => {
+const showLoginAlert = (message, isError = false) => {
+  const successSound = document.getElementById('successSound');
+  const errorSound = document.getElementById('errorSound');
+  
+  if (isError) {
+    const popup = document.createElement('div')
+    popup.className = 'popup-3d'
+    popup.textContent = 'Login Gagal!'
+    document.body.appendChild(popup)
+    
+    setTimeout(() => {
+      document.body.removeChild(popup)
+    }, 7000)
+
+    errorSound.currentTime = 0;
+    errorSound.play();
+  } else {
+    const popup = document.createElement('div')
+    popup.className = 'popup-3d'
+    popup.textContent = 'Login Successful!'
+    document.body.appendChild(popup)
+    
+    setTimeout(() => {
+      document.body.removeChild(popup)
+    }, 7000)
+
+    successSound.currentTime = 0;
+    successSound.play();
+  }
+}
+
+  const loginClick = async () => {
     isLoading.value = true
     try {
-        const response = await login({
-            'email': email.value,
-            'password': password.value,
-        })
+      const response = await login({
+        'email': email.value,
+        'password': password.value,
+      })
 
-        if(response.data.status) {
-            setToken(response.data.token)
-            if(isLoggedIn()) {
-                router.push('/')
-            }
+      if (response.data.status) {
+        setToken(response.data.token)
+        if (isLoggedIn()) {
+          router.push('/')
+          showLoginAlert('', false)
         }
+      }
     } catch (error) {
-        console.log(error.response.data.message)
+      showLoginAlert(error.response.data.message, true)
     }
     isLoading.value = false
-}
+  }
 </script>
+
+<style>
+  .popup-3d {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.1);
+  padding: 100px;
+  background-color: #fff;
+  border-radius: 10px; 
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  animation: popupAnimation 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+@keyframes popupAnimation {
+  0% {
+    transform: translate(-50%, -50%) scale(0.1) rotate(0deg);
+    opacity: 0;
+  }
+  70% {
+    transform: translate(-50%, -50%) scale(1.2) rotate(15deg); 
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+</style>

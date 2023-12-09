@@ -4,15 +4,26 @@
             <a href="/public/index.html">
                 <img src="../../public/image/logo.png" alt="Logo" class="w-32">
             </a>
+            
+            <div>
+                <div class="w-full max-w-xl relative flex">
+                    <input v-model="searchTerm" type="text" id="myInput" @input="filterNames"
+                    class="w-full border border-primary border-r-0 pl-12 py-3 pr-28 rounded-l-md focus:outline-none"
+                    placeholder="Search" title="Type in a name">
 
-            <div class="w-full max-w-xl relative flex">
-                <input v-model="searchTerm" type="text" name="search" id="search"
-                class="w-full border border-primary border-r-0 pl-12 py-3 pr-3 rounded-l-md focus:outline-none"
-                placeholder="search"/>
-                <button @click="filterProducts" 
-                class="bg-primary border border-primary text-white px-8 rounded-r-md hover:bg-transparent hover:text-primary transition">
-                Search
-                </button>
+                    <button @click="filterNames" 
+                    class="bg-primary border border-primary text-white px-10 rounded-r-md hover:bg-transparent hover:text-primary transition">
+                    Search
+                    </button>
+                </div>
+                <div class="w-full max-w-xl relative">    
+                    <ul id="myUL">
+                    <li v-for="(name, index) in filteredNames" :key="index">
+                        <a href="#" class="block border border-gray-300 bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-md"
+                        v-text="name"></a>
+                    </li>
+                    </ul>
+                </div>
             </div>
 
             <div class="flex items-center space-x-4">
@@ -22,15 +33,15 @@
                     </div>
                     <RouterLink to="/cart" class="text-xs leading-3">Cart</RouterLink>
                     <div
-                        class="absolute -right-3 -top-1 w-5 h-5 rounded-full flex items-center justify-center bg-primary text-white text-xs">
-                        2</div>
+                        class="absolute -right-3 -top-1 w-5 h-5 rounded-full flex items-center justify-center bg-primary text-white text-xs">2
+                    </div>
                 </a>
                 <a class="text-center text-gray-700 hover:text-primary transition relative">
-                    <div class="text-2xl">
-                        <i class="fa-regular fa-user"></i>
-                    </div>
-                    <RouterLink to="/account" class="text-xs leading-3">Account</RouterLink>
-                </a>
+                <div class="text-2xl">
+                    <i class="fa-regular fa-user"></i>
+                </div>
+                <RouterLink to="/account" class="text-xs leading-3">Account</RouterLink>
+                </a>        
             </div>
         </div>
     </header>
@@ -86,36 +97,19 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { RouterLink } from 'vue-router';
-import { getProducts } from '../api/product';
+import { ref } from 'vue';
 
-const showSidebar = ref(false);
 const searchTerm = ref('');
-const products = ref([]);
+const filteredNames = ref([]);
 
-onMounted(async () => {
-  await searchProducts();
-});
+const names = ref([
+  'Nasi Goreng Jancuk', 'Nasi Goreng Kambing', 'Nasi Goreng Sosis', 'Nasi Goreng Jawir', 'Nasi Goreng Seafood', 'Nasi Goreng Merah', 'Es Teh',
+  'Es Jeruk', 'Kentang Goreng', 'Tahu Crispy'
+]);
 
-const toggleSidebar = () => {
-  showSidebar.value = !showSidebar.value;
-};
-
-const searchProducts = async () => {
-  const response = await getProducts();
-  if (response.data.status) {
-    products.value = response.data.products;
-    filterProducts();
-  }
-};
-
-const filterProducts = () => {
-  if (!searchTerm.value.trim()) {
-    return;
-  }
-  products.value = products.value.filter(product =>
-    product.name.toLowerCase().includes(searchTerm.value.toLowerCase())
+const filterNames = () => {
+  filteredNames.value = names.value.filter(name =>
+    name.toUpperCase().includes(searchTerm.value.toUpperCase())
   );
 };
 </script>
