@@ -285,7 +285,13 @@
                             <div class="text-xs text-gray-500 ml-3">(150)</div>
                         </div>
                     </div>
-                    <RouterLink to="`/checkout//${product.id}`" class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">Add Cart</RouterLink>
+                    <button 
+                    @click="addItem(product)"
+                    class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition"
+                    >
+                    Add Cart
+                    </button>
+                    <!-- <RouterLink to="`/checkout//${product.id}`" class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">Add Cart</RouterLink> -->
                 </div>
             </div>
         </div>
@@ -300,6 +306,8 @@ import {ref, onMounted} from 'vue';
 import {RouterLink} from 'vue-router';
 import {getProducts} from '../api/product';
 import {getCategories} from '../api/category'
+import { insertItem } from '../api/cart';
+import { decodeToken } from '../utils/auth';
 
 const url = 'http://127.0.0.1:8000/storage/products/'
 const products = ref([])
@@ -310,8 +318,7 @@ onMounted(async () =>{
     await setCategory()
 })
 
-
-const setCategory = async () =>{
+const setCategory = async () => {
     const response = await getCategories()
     if(response.data.status){
         categories.value = response.data.categories
@@ -320,12 +327,24 @@ const setCategory = async () =>{
     }
 }
 
-const setProducts = async () =>{
+const setProducts = async () => {
     const response = await getProducts()
     if(response.data.status){
         products.value = response.data.products
     }else{
         
     }
+}
+
+const addItem = async (product) => {
+    const data = {
+        user_id: decodeToken().id,
+        product_id: product.id,
+        quantity: 1,
+        sub_total: product.price
+    }
+
+    const response = await insertItem(data)
+    console.log(response.data.message)
 }
 </script>
