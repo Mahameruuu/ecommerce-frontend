@@ -1,5 +1,5 @@
 <template>
-    <header class="py-4 shadow-sm bg-white border border-red-600">
+    <header class="py-4 shadow-sm bg-white">
         <div class="container flex items-center justify-between">
             <a href="/public/index.html">
                 <img src="../../public/image/logo.png" alt="Logo" class="w-32">
