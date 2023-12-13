@@ -1,27 +1,29 @@
 <template>
     <header class="py-4 shadow-sm bg-white">
         <div class="container flex items-center justify-between">
-            <a href="/public/index.html">
-                <img src="../../public/image/logo.png" alt="Logo" class="w-32">
-            </a>
+            <RouterLink to="/">
+                <img src="public/image/logo.png" alt="Logo" class="w-32">
+            </RouterLink>
             
             <div>
                 <div class="w-full max-w-xl relative flex">
-                    <input v-model="searchTerm" type="text" id="myInput" @input="filterNames"
-                    class="w-full border border-primary border-r-0 pl-12 py-3 pr-28 rounded-l-md focus:outline-none"
+                    <input v-model="searchTerm" type="text" id="myInput"
+                    class="w-full border border-primary border-r-0 pl-5 py-3 pr-28 rounded-l-md focus:outline-none"
                     placeholder="Search" title="Type in a name">
 
-                    <button @click="filterNames" 
-                    class="bg-primary border border-primary text-white px-10 rounded-r-md hover:bg-transparent hover:text-primary transition">
+                    <button
+                    @click="search(searchTerm)"
+                    class="bg-primary border border-primary text-white px-7 rounded-r-md hover:bg-transparent hover:text-primary transition">
                     Search
                     </button>
                 </div>
-                <div class="w-full max-w-xl relative">    
+                <div class="w-full max-w-md absolute">    
                     <ul id="myUL">
-                    <li v-for="(name, index) in filteredNames" :key="index">
-                        <a href="#" class="block border border-gray-300 bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-md"
-                        v-text="name"></a>
-                    </li>
+                        <li v-for="product in filteredProducts" :key="product.id">
+                            <div @click="search(product.name)" class="block border border-gray-300 bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-md">
+                                {{ product.name }}
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -59,7 +61,7 @@
         <div v-if="showSidebar" class="fixed top-0 left-0 h-screen w-64 bg-gray-800 z-50">
             <div class="py-4 px-8">
                 <!-- All Categories button -->
-                <button @click="toggleSidebar" class="text-white">
+                <button @click="toggleSidebar" class="px-4 py-2 text-white md:hidden">
                     <i class="fa-solid fa-times"></i>
                 </button>
                 <div class="text-white mt-4">
@@ -78,38 +80,52 @@
                     <!-- Dropdown content here -->
                 </div>
             </div>
-        </div>
-        
-        <!-- navbar -->
-        <div class="flex items-center justify-between flex-grow md:pl-12 py-5">
-            <div class="flex items-center space-x-6 capitalize">
-                <RouterLink to="/" class="text-gray-200 hover:text-white transition">Home</RouterLink>
-                <RouterLink to="/shop" class="text-gray-200 hover:text-white transition">Shop</RouterLink>
-                <RouterLink to="/about" class="text-gray-200 hover:text-white transition">About Us</RouterLink>
-                <RouterLink to="/contact" class="text-gray-200 hover:text-white transition">Contact Us</RouterLink>
-            </div>
-            <RouterLink to="/login" class="text-gray-200 hover:text-white transition">Login</RouterLink>
-        </div>
-        </div>
-    </nav>
+        </div>        
+    </div>
+</nav>
     <!-- ./navbar -->
 
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, computed } from 'vue';
+import { getProducts } from '../api/product';
+import { useRouter } from 'vue-router';
 
-const searchTerm = ref('');
-const filteredNames = ref([]);
+const router = useRouter()
 
-const names = ref([
-  'Nasi Goreng Jancuk', 'Nasi Goreng Kambing', 'Nasi Goreng Sosis', 'Nasi Goreng Jawir', 'Nasi Goreng Seafood', 'Nasi Goreng Merah', 'Es Teh',
-  'Es Jeruk', 'Kentang Goreng', 'Tahu Crispy'
-]);
+const searchTerm = ref('')
+const products = ref([])
+const showSidebar = ref(false)
 
-const filterNames = () => {
-  filteredNames.value = names.value.filter(name =>
-    name.toUpperCase().includes(searchTerm.value.toUpperCase())
-  );
+onMounted(async () =>{
+    await setProducts()
+})
+
+const toggleSidebar = () => {
+    showSidebar.value = !showSidebar.value;
 };
+
+
+const setProducts = async () => {
+    const response = await getProducts()
+    if(response.data.status){
+        products.value = response.data.products
+    }else{
+        
+    }
+}
+
+const filteredProducts = computed(() => {
+    if(searchTerm.value !== '') {
+        return products.value.filter(
+            product => product.name.toUpperCase().includes(searchTerm.value.toUpperCase()))
+    }
+})
+
+const search = (name) => {
+    router.push({path: '/shop', query:{'search': name.toLowerCase()}})
+    searchTerm.value = ''
+}
+
 </script>

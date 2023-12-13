@@ -3,9 +3,9 @@
         <div class="container py-26">
             <h1 class="my-5 flex justify-center text-3xl font-medium text-gray-800 uppercase mb-6 bg-center">Contact Us</h1>
         </div>
-        <div class="container grid grid-cols-12 items-start pb-16 pt-4 gap-6">
+        <div class="container grid grid-cols-1 md:grid-cols-12 items-start pb-16 pt-4 gap-6">
             
-        <div class="col-span-8 border border-gray-200 p-4 rounded">
+        <div class="col-span-1 md:col-span-8 border border-gray-200 p-4 rounded">
             <div class="space-y-4">
                 <div>
                     <label for="first-name" class="text-gray-600">Name</label>
@@ -24,7 +24,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-span-4 border border-gray-200 p-4 my-5 rounded">
+        <div class="col-span-1 md:col-span-4 border border-gray-200 p-4 my-5 rounded">
             <address>
                 <div class="space-y-2 my-5">
                     <i class="fa-solid fa-location-dot"></i>
