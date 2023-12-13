@@ -1,27 +1,29 @@
 <template>
     <header class="py-4 shadow-sm bg-white">
         <div class="container flex items-center justify-between">
-            <a href="/public/index.html">
-                <img src="../../public/image/logo.png" alt="Logo" class="w-32">
-            </a>
+            <RouterLink to="/">
+                <img src="public/image/logo.png" alt="Logo" class="w-32">
+            </RouterLink>
             
             <div>
                 <div class="w-full max-w-xl relative flex">
-                    <input v-model="searchTerm" type="text" id="myInput" @input="filterNames"
-                    class="w-full border border-primary border-r-0 pl-12 py-3 pr-28 rounded-l-md focus:outline-none"
+                    <input v-model="searchTerm" type="text" id="myInput"
+                    class="w-full border border-primary border-r-0 pl-5 py-3 pr-28 rounded-l-md focus:outline-none"
                     placeholder="Search" title="Type in a name">
 
-                    <button @click="filterNames" 
-                    class="bg-primary border border-primary text-white px-10 rounded-r-md hover:bg-transparent hover:text-primary transition">
+                    <button
+                    @click="search(searchTerm)"
+                    class="bg-primary border border-primary text-white px-7 rounded-r-md hover:bg-transparent hover:text-primary transition">
                     Search
                     </button>
                 </div>
-                <div class="w-full max-w-xl absolute">    
-                    <ul id="myUL" v-if="products && products.length > 0">
-                    <li v-for="product in products" :key="product.id">
-                        <a href="#" class="block border border-gray-300 bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-md"
-                        v-text="product.name"></a>
-                    </li>
+                <div class="w-full max-w-md absolute">    
+                    <ul id="myUL">
+                        <li v-for="product in filteredProducts" :key="product.id">
+                            <div @click="search(product.name)" class="block border border-gray-300 bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-md">
+                                {{ product.name }}
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -86,8 +88,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { getProducts } from '../api/product';
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
 
 const searchTerm = ref('')
 const products = ref([])
@@ -111,14 +116,16 @@ const setProducts = async () => {
     }
 }
 
-const filterNames = () => {
-  if (searchTerm.value.trim() === '') {
-    setProducts();
-  } else {
-    products.value = products.value.filter(product =>
-      product.name.toUpperCase().includes(searchTerm.value.toUpperCase())
-    );
-  }
-};
+const filteredProducts = computed(() => {
+    if(searchTerm.value !== '') {
+        return products.value.filter(
+            product => product.name.toUpperCase().includes(searchTerm.value.toUpperCase()))
+    }
+})
+
+const search = (name) => {
+    router.push({path: '/shop', query:{'search': name.toLowerCase()}})
+    searchTerm.value = ''
+}
 
 </script>
