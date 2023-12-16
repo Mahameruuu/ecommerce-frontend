@@ -13,7 +13,6 @@
 
     <!-- account wrapper -->
     <div class="container grid grid-cols-12 items-start gap-6 pt-4 pb-16">
-
         <!-- sidebar -->
         <div class="col-span-3">
             <div class="px-4 py-3 shadow flex items-center gap-4">
@@ -69,10 +68,10 @@
                 <a class="text-primary underline" title="Semua" aria-role="tab" aria-selected="true" aria-controls="olp_panel_id-0.9573767430992093" id="olp_tab_id-0.9573767430992093" href="#">
                     <span class="_20hgQK">Semua</span>
                 </a>
-                <a class="px-16" title="Belum Bayar" aria-role="tab" aria-selected="false" aria-controls="olp_panel_id-0.4605949389474002" id="olp_tab_id-0.4605949389474002" href="#">
+                <a class="px-20" title="Belum Bayar" aria-role="tab" aria-selected="false" aria-controls="olp_panel_id-0.4605949389474002" id="olp_tab_id-0.4605949389474002" href="#">
                     <span class="_20hgQK">Belum Bayar</span>
                 </a>
-                <a class="" title="Belum Bayar" aria-role="tab" aria-selected="false" aria-controls="olp_panel_id-0.4605949389474002" id="olp_tab_id-0.4605949389474002" href="#">
+                <a class="px-0" title="Belum Bayar" aria-role="tab" aria-selected="false" aria-controls="olp_panel_id-0.4605949389474002" id="olp_tab_id-0.4605949389474002" href="#">
                     <span class="_20hgQK">DiBatalkan</span>
                 </a>
                 <a class="px-16" title="Belum Bayar" aria-role="tab" aria-selected="false" aria-controls="olp_panel_id-0.4605949389474002" id="olp_tab_id-0.4605949389474002" href="#">

@@ -51,8 +51,7 @@
             <div class="mt-4 flex gap-4">
                 <a href="#"
                     class="w-1/2 py-2 text-center text-white bg-blue-800 rounded uppercase font-roboto font-medium text-sm hover:bg-blue-700">facebook</a>
-                <a href="#"
-                    class="w-1/2 py-2 text-center text-white bg-red-600 rounded uppercase font-roboto font-medium text-sm hover:bg-red-500">google</a>
+                    <button @click="googleClick" class="w-1/2 py-2 text-center text-white bg-red-600 rounded uppercase font-roboto font-medium text-sm hover:bg-red-500">Google</button>
             </div>
             <!-- ./login with -->
 
@@ -72,7 +71,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router'
-import { login } from '../api/auth'
+import { login, login_google } from '../api/auth'
 import { setToken, isLoggedIn } from '../utils/auth'
 
 const router = useRouter()
@@ -131,6 +130,22 @@ const showLoginAlert = (message, isError = false) => {
       showLoginAlert(error.response.data.message, true)
     }
     isLoading.value = false
+  }
+
+  const googleClick = async () =>{
+    try {
+    const response = await login_google()
+    if(response.data.status){
+      setToken(response.data.token)
+      if(isLoggedIn()){
+        router.push('/')
+        showLoginAlert('', false)
+      }
+    }
+  } catch (error) {
+    console.log('error') 
+    // showLoginAlert(error.response.data.message, true)
+    }
   }
 </script>
 

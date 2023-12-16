@@ -1,10 +1,10 @@
 <template>
     <div class="container py-26">
-        <h1 class="my-5 flex justify-center text-3xl font-medium text-gray-800 uppercase mb-6 bg-center">Keranjang Belanja</h1>
+        <h1 class="my-5 flex justify-center text-3xl font-medium text-gray-800 uppercase mb-6 bg-center sm:text-4xl md:text-5xl lg:text-6xl">Keranjang Belanja</h1>
     </div>
 
       <!-- Nasi Goreng -->
-      <div class="container grid grid-cols-12 items-start pb-16 pt-4 gap-6">
+      <div class="container grid grid-cols-1 md:grid-cols-12 items-start pb-16 pt-4 gap-6">
       <div class="col-span-8 border border-gray-200 p-4 shadow rounded">
           <div v-for="item in items" :key="item.id" class="relative">
               <div class="flex items-center py-4">
@@ -43,7 +43,7 @@
       </div>
         
       <!-- Summary -->
-      <div class="col-span-4 border border-gray-200 p-4 rounded">
+      <div class="col-span-4     border border-gray-200 p-4 rounded">
           <h4 class="text-gray-800 text-lg mb-4 font-medium uppercase">Order Summary</h4>
           <table class="space-y-2 w-[100%] mb-2">
             <tr v-for="item in items" :key="item.id">
@@ -62,7 +62,7 @@
       </div>
   </div>
 
-    <div class="flex items-center justify-between flex-grow md:pl-32">
+    <div class="flex items-center justify-between flex-grow md:pl-32 py-5 md:py-0">
         <div class="flex items-center space-x-6 capitalize">
            <h2 class="text-gray-500">KAMU MUNGKIN JUGA SUKA</h2>
         </div>
@@ -74,7 +74,7 @@
     <!-- DINAMIS -->
     
     <div class="col-span-3">
-        <div class="grid md:grid-cols-5 grid-cols-2 gap-20 px-32 py-5">
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-20 px-8 md:px-32 py-5">
             <div v-for="product in products" :key="product.id" class="bg-white shadow rounded overflow-hidden group">
                 <div class="relative">
                     <img :src="url+product.image" :alt="product.name" class="w-full">
