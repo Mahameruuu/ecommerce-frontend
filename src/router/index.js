@@ -87,11 +87,6 @@ const router = createRouter({
         }
       }
     },
-    {
-      path:'/recommend',
-      name:'Recommend',
-      component:() => import ('../views/recommend.vue')
-    }
   ]
 })
 
