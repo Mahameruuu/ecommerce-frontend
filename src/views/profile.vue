@@ -56,7 +56,7 @@
                         <span class="absolute -left-8 top-0 text-base">
                             <i class="fa-solid fa-right-from-bracket"></i>
                         </span>
-                        <RouterLink to="/login">Logout</RouterLink>
+                        <RouterLink to="/logout">Logout</RouterLink>
                     </a>
                 </div>
 

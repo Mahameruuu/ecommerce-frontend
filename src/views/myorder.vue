@@ -55,7 +55,7 @@
                         <span class="absolute -left-8 top-0 text-base">
                             <i class="fa-solid fa-right-from-bracket"></i>
                         </span>
-                        <RouterLink to="/login">Logout</RouterLink>
+                        <RouterLink to="/logout">Logout</RouterLink>
                     </a>
                 </div>
 
@@ -66,18 +66,15 @@
         <!-- info -->
         <div class="col-span-9 grid gap-4">
             <section class="" aria-role="tablist">
-                <a class="text-primary underline" title="Semua" aria-role="tab" aria-selected="true" aria-controls="olp_panel_id-0.9573767430992093" id="olp_tab_id-0.9573767430992093" href="#">
-                    <span class="_20hgQK">Semua</span>
-                </a>
-                <a class="px-16" title="Belum Bayar" aria-role="tab" aria-selected="false" aria-controls="olp_panel_id-0.4605949389474002" id="olp_tab_id-0.4605949389474002" href="#">
-                    <span class="_20hgQK">Belum Bayar</span>
-                </a>
-                <a class="" title="Belum Bayar" aria-role="tab" aria-selected="false" aria-controls="olp_panel_id-0.4605949389474002" id="olp_tab_id-0.4605949389474002" href="#">
-                    <span class="_20hgQK">DiBatalkan</span>
-                </a>
-                <a class="px-16" title="Belum Bayar" aria-role="tab" aria-selected="false" aria-controls="olp_panel_id-0.4605949389474002" id="olp_tab_id-0.4605949389474002" href="#">
+                <button @click="tabClick('all')" class="px-16" title="Belum Bayar" aria-role="tab" aria-selected="false" aria-controls="olp_panel_id-0.4605949389474002" id="olp_tab_id-0.4605949389474002">
+                    <span class="_20hgQK">semua</span>
+                </button>
+                <button @click="tabClick('unpaid')" class="px-16" title="Belum Bayar" aria-role="tab" aria-selected="false" aria-controls="olp_panel_id-0.4605949389474002" id="olp_tab_id-0.4605949389474002">
+                    <span class="_20hgQK">Belum Dibayar</span>
+                </button>
+                <button @click="tabClick('paid')" class="px-16" title="Belum Bayar" aria-role="tab" aria-selected="false" aria-controls="olp_panel_id-0.4605949389474002" id="olp_tab_id-0.4605949389474002">
                     <span class="_20hgQK">Selesai</span>
-                </a>
+                </button>
             </section>
             <div class="shadow rounded bg-white px-8 py-10 pt-6 pb-8">
                 <div class="flex items-center justify-between mb-4">    
@@ -87,13 +84,27 @@
                         placeholder="search">
                     </div>
                 </div>
-                <div class="my-40">
+                <div v-if="!filteredOrder()" class="my-40">
                     <div class="flex justify-center my-5">
                         <img src="../../public/image/noted.png">
                     </div>
                     <div class="flex justify-center text-gray-500">
                         <p>Belum ada pesanan</p>
                     </div>
+                </div>
+                <div v-else>
+                    <table class="w-[70%]">
+                        <tr class="my-1">
+                            <td>Tanggal</td>
+                            <td>Total</td>
+                            <td>Status</td>
+                        </tr>
+                        <tr v-for="order in filteredOrder()" :key="order.id" class="my-5">
+                            <td>{{ formatDate(order.date) }}</td>
+                            <td>{{ order.total.total }}</td>
+                            <td>{{ order.status }}</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
@@ -104,5 +115,42 @@
 </template>
 
 <script setup>
+import { computed, onMounted, ref } from 'vue';
+import { getOrder } from '../api/order';
+import { decodeToken } from '../utils/auth';
 
+const tabs = ref('all')
+const orders = ref([])
+
+onMounted(async () => {
+    await setOrders()
+})
+
+const setOrders = async () => {
+    const response = await getOrder(decodeToken().id)
+
+    if(response.data.status) {
+        orders.value = response.data.orders
+    }
+    else {
+        console.log(response.data.message)
+    }
+}
+
+const formatDate = (datetime) => {
+    const options = { day: 'numeric', month: 'long', year: 'numeric' }
+    const date = new Date(datetime)
+    return date.toLocaleDateString('id-ID', options)
+}
+
+const tabClick = (tab) => {
+    return tabs.value = tab
+}
+
+const filteredOrder = () => {
+    if(tabs.value !== 'all') {
+        return orders.value.filter(order => order.status === tabs.value)
+    }
+    return orders.value
+}
 </script>
