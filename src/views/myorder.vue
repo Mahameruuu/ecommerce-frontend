@@ -76,7 +76,7 @@
                 </a>
                 <a class="px-16" title="Belum Bayar" aria-role="tab" aria-selected="false" aria-controls="olp_panel_id-0.4605949389474002" id="olp_tab_id-0.4605949389474002" href="#">
                     <span class="_20hgQK">Selesai</span>
-                </button>
+                </a>
             </section>
             <div class="shadow rounded bg-white px-8 py-10 pt-6 pb-8">
                 <div class="flex items-center justify-between mb-4">    
