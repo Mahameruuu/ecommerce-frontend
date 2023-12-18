@@ -151,11 +151,11 @@
 
 <script setup>
 import {ref, onMounted} from 'vue';
-import {RouterLink} from 'vue-router';
 import {getProducts} from '../api/product';
 import {getCategories} from '../api/category'
 import { insertItem } from '../api/cart';
-import { decodeToken } from '../utils/auth';
+import { decodeToken, isLoggedIn } from '../utils/auth';
+import router from '../router';
 
 const url = 'http://127.0.0.1:8000/storage/products/'
 const products = ref([])
@@ -185,6 +185,10 @@ const setProducts = async () => {
 }
 
 const addItem = async (product) => {
+    if(!isLoggedIn()) {
+        router.push('/login')
+    }
+
     const data = {
         user_id: decodeToken().id,
         product_id: product.id,
