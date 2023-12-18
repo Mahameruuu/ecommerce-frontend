@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { isLoggedIn } from '../utils/auth'
 
 
 const router = createRouter({
@@ -47,7 +48,14 @@ const router = createRouter({
     {
       path:'/checkout',
       name:'Checkout',
-      component: () => import('../views/checkout.vue')
+      component: () => import('../views/checkout.vue'),
+      beforeEnter: (to, from, next) => {
+        if (from.path === '/cart') {
+          next()
+        } else {
+          next('/')
+        }
+      },
     },
     {
       path:'/updatepw',
@@ -72,8 +80,13 @@ const router = createRouter({
     {
       path:'/cart',
       name:'Cart',
-      component:() => import('../views/cart.vue')
-    }
+      component:() => import('../views/cart.vue'),
+      beforeEnter(to) {
+        if(!isLoggedIn()) {
+          return '/login'
+        }
+      }
+    },
   ]
 })
 

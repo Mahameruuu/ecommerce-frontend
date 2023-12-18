@@ -57,7 +57,13 @@
               <p>Rp {{ total }}</p>
           </div>
           <div class="pt-5">
-            <a href="#" class="block w-full py-3 px-4 text-center text-white bg-primary border border-primary rounded-md hover-bg-transparent hover-text-primary transition font-medium">Check Out</a>
+            <RouterLink v-if="total !== 0" to="/checkout" class="block w-full py-3 px-4 text-center text-white bg-primary border border-primary rounded-md hover-bg-transparent hover-text-primary transition font-medium">
+                Checkout
+            </RouterLink>
+            <span v-else class="cursor-pointer block w-full py-3 px-4 text-center text-white bg-primary border border-primary rounded-md hover-bg-transparent hover-text-primary transition font-medium">
+                Checkout
+            </span>
+            <!-- <a href="#" class="block w-full py-3 px-4 text-center text-white bg-primary border border-primary rounded-md hover-bg-transparent hover-text-primary transition font-medium">Check Out</a> -->
           </div>
       </div>
   </div>
