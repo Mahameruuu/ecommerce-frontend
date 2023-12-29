@@ -74,6 +74,7 @@ import { ref, onMounted, computed, reactive } from 'vue'
 import { getItems } from '../api/cart'
 import { decodeToken } from '../utils/auth'
 import { checkout } from '../api/order'
+import { getAccount } from '../api/account';
 
 const items = ref([])
 const form = ref({
@@ -84,7 +85,17 @@ const form = ref({
 
 onMounted(async () => {
     await setItems()
+    await setAccount()
 })
+
+const setAccount = async () => {
+    const response = await getAccount(decodeToken().id)
+
+    if(response.data.status) {
+        form.value.phone_number = response.data.profile.phone_number
+        form.value.address = response.data.profile.address
+    }
+}
 
 const checkoutClick = async () => {
     const data = {

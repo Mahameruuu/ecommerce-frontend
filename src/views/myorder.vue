@@ -17,35 +17,34 @@
         <div class="col-span-3">
             <div class="px-4 py-3 shadow flex items-center gap-4">
                 <div class="flex-shrink-0">
-                    <img src="../../public/image/diri.jpg" alt="profile"
+                    <img src="../../public/image/user-profile.jpg" alt="profile"
                         class="rounded-full w-14 h-14 border border-gray-200 p-1 object-cover">
                 </div>
                 <div class="flex-grow">
                     <p class="text-gray-600">Hello,</p>
-                    <h4 class="text-gray-800 font-medium">Mahameru</h4>
+                    <h4 class="text-gray-800 font-medium">{{ name }}</h4>
                 </div>
             </div>
 
             <div class="mt-6 bg-white shadow rounded p-4 divide-y divide-gray-200 space-y-4 text-gray-600">
                 <div class="space-y-1 pl-8">
-                    <a href="#" class="relative text-primary block font-medium capitalize transition">
+                    <a href="#" class="relative hover:text-primary block font-medium capitalize transition">
                         <span class="absolute -left-8 top-0 text-base">
                             <i class="fa-regular fa-address-card"></i>
                         </span>
-                        <RouterLink to="/account" class="relative hover:text-primary block capitalize transition">Account</RouterLink>
+                        <RouterLink to="/account" class="relative hover:text-primary block capitalize transition">Profile</RouterLink>
                     </a>
-                    <RouterLink to="/profile" class="relative hover:text-primary block capitalize transition">Profile</RouterLink>
                     <a class="relative hover:text-primary block capitalize transition">
-                        <RouterLink to="/updatepw">Change Password</RouterLink>
+                        <RouterLink to="/account/updatepw">Change Password</RouterLink>
                     </a>
                 </div>
 
                 <div class="space-y-1 pl-8 pt-4">
-                    <a href="#" class="relative hover:text-primary block font-medium capitalize transition">
+                    <a href="#" class="relative text-primary block font-medium capitalize transition">
                         <span class="absolute -left-8 top-0 text-base">
                             <i class="fa-solid fa-box-archive"></i>
                         </span>
-                        <RouterLink to="/myorder">My Order</RouterLink>
+                        <RouterLink to="/account/myorder">My Order</RouterLink>
                     </a>
                 </div>
 
@@ -65,16 +64,13 @@
         <!-- info -->
         <div class="col-span-9 grid gap-4">
             <section class="" aria-role="tablist">
-                <a class="text-primary underline" title="Semua" aria-role="tab" aria-selected="true" aria-controls="olp_panel_id-0.9573767430992093" id="olp_tab_id-0.9573767430992093" href="#">
+                <a @click="tabClick('all')" :class="{ 'text-primary': tabs === 'all' }" class="cursor-pointer px-16" title="Semua" aria-role="tab" aria-selected="false" aria-controls="olp_panel_id-0.4605949389474002" id="olp_tab_id-0.4605949389474002">
                     <span class="_20hgQK">Semua</span>
                 </a>
-                <a class="px-20" title="Belum Bayar" aria-role="tab" aria-selected="false" aria-controls="olp_panel_id-0.4605949389474002" id="olp_tab_id-0.4605949389474002" href="#">
-                    <span class="_20hgQK">Belum Bayar</span>
+                <a @click="tabClick('unpaid')" :class="{ 'text-primary': tabs === 'unpaid' }" class="cursor-pointer px-16" title="Belum Bayar" aria-role="tab" aria-selected="false" aria-controls="olp_panel_id-0.4605949389474002" id="olp_tab_id-0.4605949389474002">
+                    <span class="_20hgQK">Belum Dibayar</span>
                 </a>
-                <a class="px-0" title="Belum Bayar" aria-role="tab" aria-selected="false" aria-controls="olp_panel_id-0.4605949389474002" id="olp_tab_id-0.4605949389474002" href="#">
-                    <span class="_20hgQK">DiBatalkan</span>
-                </a>
-                <a class="px-16" title="Belum Bayar" aria-role="tab" aria-selected="false" aria-controls="olp_panel_id-0.4605949389474002" id="olp_tab_id-0.4605949389474002" href="#">
+                <a @click="tabClick('paid')" :class="{ 'text-primary': tabs === 'paid' }" class="cursor-pointer px-16" title="Selesai" aria-role="tab" aria-selected="false" aria-controls="olp_panel_id-0.4605949389474002" id="olp_tab_id-0.4605949389474002">
                     <span class="_20hgQK">Selesai</span>
                 </a>
             </section>
@@ -86,7 +82,7 @@
                         placeholder="search">
                     </div>
                 </div>
-                <div v-if="!filteredOrder()" class="my-40">
+                <div v-if="filteredOrder().length === 0" class="my-40">
                     <div class="flex justify-center my-5">
                         <img src="../../public/image/noted.png">
                     </div>
@@ -117,10 +113,11 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { getOrder } from '../api/order';
 import { decodeToken } from '../utils/auth';
 
+const name = ref(decodeToken().name)
 const tabs = ref('all')
 const orders = ref([])
 
