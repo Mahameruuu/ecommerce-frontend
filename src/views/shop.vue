@@ -20,84 +20,17 @@
             <div>
                 <h3 class="text-xl text-gray-800 mb-3 uppercase font-medium">Categories</h3>
                 <div class="space-y-2">
-                    <div v-for="category in categories" class="flex items-center">
-                        <input type="checkbox" name="cat-1" id="cat-1"
-                            class="text-primary focus:ring-0 rounded-sm cursor-pointer">
-                        <label for="cat-1" class="text-gray-600 ml-3 cusror-pointer">{{category.name}}</label>
-                        <div class="ml-auto text-gray-600 text-sm">({{category.item_count}})</div>
-                    </div>
+                <div v-for="category in categories" :key="category.id" class="flex items-center">
+                    <input
+                    type="checkbox"
+                    :id="`cat-${category.id}`"
+                    v-model="selectedCategories"
+                    :value="category.name"
+                    class="text-primary focus:ring-0 rounded-sm cursor-pointer"
+                    />
+                    <label :for="`cat-${category.id}`" class="text-gray-600 ml-3 cursor-pointer">{{ category.name }}</label>
+                    <div class="ml-auto text-gray-600 text-sm">({{ category.item_count }})</div>
                 </div>
-            </div>
-
-            <div class="pt-4">
-                <h3 class="text-xl text-gray-800 mb-3 uppercase font-medium">Favourite</h3>
-                <div class="space-y-2">
-                    <div class="flex items-center">
-                        <input type="checkbox" name="brand-1" id="brand-1"
-                            class="text-primary focus:ring-0 rounded-sm cursor-pointer">
-                        <label for="brand-1" class="text-gray-600 ml-3 cusror-pointer">Nasi Goreng Jancuk</label>
-                        <div class="ml-auto text-gray-600 text-sm">(15)</div>
-                    </div>
-                    <div class="flex items-center">
-                        <input type="checkbox" name="brand-2" id="brand-2"
-                            class="text-primary focus:ring-0 rounded-sm cursor-pointer">
-                        <label for="brand-2" class="text-gray-600 ml-3 cusror-pointer">Nasi Goreng Kambing</label>
-                        <div class="ml-auto text-gray-600 text-sm">(9)</div>
-                    </div>
-                    <div class="flex items-center">
-                        <input type="checkbox" name="brand-3" id="brand-3"
-                            class="text-primary focus:ring-0 rounded-sm cursor-pointer">
-                        <label for="brand-3" class="text-gray-600 ml-3 cusror-pointer">Nasi Goreng Sosis</label>
-                        <div class="ml-auto text-gray-600 text-sm">(21)</div>
-                    </div>
-                    <div class="flex items-center">
-                        <input type="checkbox" name="brand-4" id="brand-4"
-                            class="text-primary focus:ring-0 rounded-sm cursor-pointer">
-                        <label for="brand-4" class="text-gray-600 ml-3 cusror-pointer">Nasi Goreng Jawir</label>
-                        <div class="ml-auto text-gray-600 text-sm">(10)</div>
-                    </div>
-                    <div class="flex items-center">
-                        <input type="checkbox" name="brand-5" id="brand-5"
-                            class="text-primary focus:ring-0 rounded-sm cursor-pointer">
-                        <label for="brand-5" class="text-gray-600 ml-3 cusror-pointer">Nasi Goreng Seafood</label>
-                        <div class="ml-auto text-gray-600 text-sm">(10)</div>
-                    </div>
-                    <div class="flex items-center">
-                        <input type="checkbox" name="brand-5" id="brand-5"
-                            class="text-primary focus:ring-0 rounded-sm cursor-pointer">
-                            <label for="brand-5" class="text-gray-600 ml-3 cursor-pointer">Nasi Goreng Merah</label>
-                            <div class="ml-auto text-gray-600 text-sm">(10)</div>
-                    </div>
-                    <div class="flex items-center">
-                        <input type="checkbox" name="brand-5" id="brand-5"
-                            class="text-primary focus:ring-0 rounded-sm cursor-pointer">
-                            <label for="brand-5" class="text-gray-600 ml-3 cursor-pointer">Es Teh</label>
-                            <div class="ml-auto text-gray-600 text-sm">(10)</div>
-                    </div>
-                    <div class="flex items-center">
-                        <input type="checkbox" name="brand-5" id="brand-5"
-                            class="text-primary focus:ring-0 rounded-sm cursor-pointer">
-                            <label for="brand-5" class="text-gray-600 ml-3 cursor-pointer">Es Jeruk</label>
-                            <div class="ml-auto text-gray-600 text-sm">(10)</div>
-                    </div>
-                    <div class="flex items-center">
-                        <input type="checkbox" name="brand-5" id="brand-5"
-                            class="text-primary focus:ring-0 rounded-sm cursor-pointer">
-                            <label for="brand-5" class="text-gray-600 ml-3 cursor-pointer">Kentang Goreng</label>
-                            <div class="ml-auto text-gray-600 text-sm">(10)</div>
-                    </div>
-                    <div class="flex items-center">
-                        <input type="checkbox" name="brand-5" id="brand-5"
-                            class="text-primary focus:ring-0 rounded-sm cursor-pointer">
-                            <label for="brand-5" class="text-gray-600 ml-3 cursor-pointer">Tahu Krispy</label>
-                            <div class="ml-auto text-gray-600 text-sm">(10)</div>
-                    </div>
-                    <div class="flex items-center">
-                        <input type="checkbox" name="brand-5" id="brand-5"
-                            class="text-primary focus:ring-0 rounded-sm cursor-pointer">
-                            <label for="brand-5" class="text-gray-600 ml-3 cursor-pointer">Cireng Goreng</label>
-                            <div class="ml-auto text-gray-600 text-sm">(10)</div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -106,7 +39,7 @@
         <!-- products -->
         <div class="col-span-3">
             <div class="grid md:grid-cols-3 grid-cols-2 gap-6">
-                <div v-for="product in products" :key="product.id" class="bg-white shadow rounded overflow-hidden group">
+                <div v-for="product in filteredProducts" :key="product.id" class="bg-white shadow rounded overflow-hidden group">
                     <div class="relative">
                         <img :src="url+product.image" :alt="product.name" class="w-full">
                         <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center 
@@ -150,21 +83,31 @@
 </template>
 
 <script setup>
-import {ref, onMounted} from 'vue';
-import {getProducts} from '../api/product';
+import {ref, onMounted, watch, watchEffect, computed} from 'vue'
+import {getProducts} from '../api/product'
 import {getCategories} from '../api/category'
-import { insertItem } from '../api/cart';
-import { decodeToken, isLoggedIn } from '../utils/auth';
-import router from '../router';
+import { insertItem } from '../api/cart'
+import { decodeToken, isLoggedIn } from '../utils/auth'
+import router from '../router'
+import { useRoute } from 'vue-router'
 
 const url = 'http://127.0.0.1:8000/storage/products/'
 const products = ref([])
-const categories = ref([]) 
+const categories = ref([])
+const selectedCategories = ref([])
+const searchQuery = ref('')
+const route = useRoute()
 
 onMounted(async () =>{
     await setProducts()
     await setCategory()
 })
+
+const setSearchQuery = async () => {
+  // Set searchQuery based on the query parameter
+  const searchParam = route.query.search;
+  searchQuery.value = searchParam || '';
+}
 
 const setCategory = async () => {
     const response = await getCategories()
@@ -174,6 +117,7 @@ const setCategory = async () => {
 
     }
 }
+        console.log(selectedCategories)
 
 const setProducts = async () => {
     const response = await getProducts()
@@ -183,6 +127,14 @@ const setProducts = async () => {
         
     }
 }
+
+const filteredProducts = computed(() => {
+  return products.value.filter(product => {
+    const categoryFilter = selectedCategories.value.length === 0 || selectedCategories.value.includes(product.category)
+    const searchFilter = searchQuery.value === '' || product.name.toLowerCase().includes(searchQuery.value.toLowerCase())
+    return categoryFilter && searchFilter
+  })
+})
 
 const addItem = async (product) => {
     if(!isLoggedIn()) {
@@ -199,4 +151,18 @@ const addItem = async (product) => {
     const response = await insertItem(data)
     console.log(response.data.message)
 }
+
+watchEffect(() => {
+  // Watch for changes in route.query and update selectedCategories and searchQuery accordingly
+  const categoryQuery = route.query.category;
+  selectedCategories.value = categoryQuery ? categoryQuery.split('+') : [];
+
+  // Update searchQuery when search parameter changes
+  setSearchQuery();
+});
+
+watch(selectedCategories, () => {
+  const categoryQuery = selectedCategories.value.join('+')
+  router.push({ query: { category: categoryQuery } })
+});
 </script>

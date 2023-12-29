@@ -50,19 +50,15 @@
         <div class="grid grid-cols-3 gap-3">
             <div class="relative rounded-sm overflow-hidden group">
                 <img src="image/categorys/category-food.jpeg" alt="category 1" class="w-full">
-                <a href="#"
-                    class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-xl text-white font-roboto font-medium group-hover:bg-opacity-60 transition">Food</a>
+                <RouterLink to="/shop?category=makanan" class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-xl text-white font-roboto font-medium group-hover:bg-opacity-60 transition">Makanan</RouterLink>
             </div>
             <div class="relative rounded-sm overflow-hidden group">
                 <img src="image/categorys/category-drink.jpeg" alt="category 2" class="w-full">
-                <a href="#"
-                    class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-xl text-white font-roboto font-medium group-hover:bg-opacity-60 transition">Drink</a>
+                <RouterLink to="/shop?category=minuman" class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-xl text-white font-roboto font-medium group-hover:bg-opacity-60 transition">Minuman</RouterLink>
             </div>
             <div class="relative rounded-sm overflow-hidden group">
                 <img src="image/categorys/category-snack.jpeg" alt="category 3" class="w-full">
-                <a href="#"
-                    class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-xl text-white font-roboto font-medium group-hover:bg-opacity-60 transition">Snack
-                </a>
+                <RouterLink to="/shop?category=snack" class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-xl text-white font-roboto font-medium group-hover:bg-opacity-60 transition">Snack</RouterLink>
             </div>
         </div>
     </div>
