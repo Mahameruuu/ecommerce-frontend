@@ -20,7 +20,7 @@
                 <div class="w-full max-w-md absolute">    
                     <ul id="myUL">
                         <li v-for="product in filteredProducts" :key="product.id">
-                            <div @click="search(product.name)" class="block border border-gray-300 bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-md">
+                            <div @click="search(product.name)" class="cursor-pointer block border border-gray-300 bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-md">
                                 {{ product.name }}
                             </div>
                         </li>
