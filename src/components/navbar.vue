@@ -57,10 +57,10 @@
                     <div class="p-3">
                         <div class="flex items-center justify-between mb-2">
                             <a href="/account">
-                                <img class="w-10 h-10 rounded-full" src="../../public/image/diri.jpg" alt="Jese Leos">
+                                <img class="w-10 h-10 rounded-full" src="../../public/image/user-profile.jpg" alt="Jese Leos">
                             </a>
                             <div>
-                                <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-xs px-3 py-1.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">M. Mahameru. A</button>
+                                <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-xs px-3 py-1.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">{{ name }}</button>
                             </div>
                         </div>
                     </div>
@@ -122,21 +122,24 @@
 import { ref, onMounted, computed } from 'vue';
 import { getProducts } from '../api/product';
 import { useRouter } from 'vue-router';
+import { decodeToken, isLoggedIn } from '../utils/auth';
 
 const router = useRouter()
-
 const searchTerm = ref('')
 const products = ref([])
 const showSidebar = ref(false)
+const name = ref('')
 
 onMounted(async () =>{
     await setProducts()
+    if(isLoggedIn()) {
+        name.value = decodeToken().name
+    }
 })
 
 const toggleSidebar = () => {
     showSidebar.value = !showSidebar.value;
 };
-
 
 const setProducts = async () => {
     const response = await getProducts()

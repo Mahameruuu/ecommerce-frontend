@@ -37,13 +37,28 @@ const router = createRouter({
     },
     {
       path:'/account',
-      name:'Account',
-      component: () => import('../views/account.vue')
-    },
-    {
-      path:'/profile',
-      name:'Profile',
-      component: () => import('../views/profile.vue')
+      beforeEnter(to) {
+        if(!isLoggedIn()) {
+          return '/login'
+        }
+      },
+      children: [
+        {
+          path:'',
+          name:'Profile',
+          component: () => import('../views/profile.vue')
+        },
+        {
+          path:'updatepw',
+          name:'Updatepw',
+          component: () => import('../views/update_pw.vue')
+        },
+        {
+          path:'myorder',
+          name:'Myorder',
+          component:() => import('../views/myorder.vue')
+        },
+      ]
     },
     {
       path:'/checkout',
@@ -58,11 +73,6 @@ const router = createRouter({
       },
     },
     {
-      path:'/updatepw',
-      name:'Updatepw',
-      component: () => import('../views/update_pw.vue')
-    },
-    {
       path:'/about',
       name:'About',
       component:() => import('../views/about.vue')
@@ -71,11 +81,6 @@ const router = createRouter({
       path:'/contact',
       name:'Contact',
       component:() => import('../views/contact-us.vue')
-    },
-    {
-      path:'/myorder',
-      name:'Myorder',
-      component:() => import('../views/myorder.vue')
     },
     {
       path:'/cart',
