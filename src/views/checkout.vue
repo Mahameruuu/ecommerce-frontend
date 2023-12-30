@@ -75,7 +75,9 @@ import { getItems } from '../api/cart'
 import { decodeToken } from '../utils/auth'
 import { checkout } from '../api/order'
 import { getAccount } from '../api/account';
+import { useRouter } from 'vue-router';
 
+const router = useRouter()
 const items = ref([])
 const form = ref({
     'name': decodeToken().name,
@@ -114,7 +116,8 @@ const checkoutClick = async () => {
     const response = await checkout(data)
 
     if(response.data.status) {
-        console.log('Berhasil!,. lanjut midtrans')
+        console.log(response.data.snap_url)
+        window.location.href = response.data.snap_url
     }
     else {
         console.log(response.data.message)
