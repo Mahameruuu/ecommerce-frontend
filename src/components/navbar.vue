@@ -2,7 +2,7 @@
     <header class="py-4 shadow-sm bg-white">
         <div class="container flex items-center justify-between">
             <RouterLink to="/">
-                <img src="public/image/logo.png" alt="Logo" class="w-32">
+                <!-- <img src="public/image/logo.png" alt="Logo" class="w-32"> -->
             </RouterLink>
             
             <div>
