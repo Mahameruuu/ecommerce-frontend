@@ -122,7 +122,7 @@ import { getProducts } from '../api/product'
 import { getItems, updateItem, deleteItem } from '../api/cart'
 import { decodeToken } from '../utils/auth'
 
-const url = 'http://127.0.0.1:8000/storage/products/'
+const url = 'https://imt.mma.my.id/storage/products/'
 const products = ref([]) 
 const items = ref([])
 

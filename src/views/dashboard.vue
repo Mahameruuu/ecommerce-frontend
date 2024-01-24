@@ -255,7 +255,7 @@
 import {ref, onMounted} from 'vue';
 import {getProducts} from '../api/product';
 
-const url = 'http://127.0.0.1:8000/storage/products/'
+const url = 'https://imt.mma.my.id/storage/products/'
 const products = ref([]) 
 
 onMounted(async () =>{

@@ -91,7 +91,7 @@ import { decodeToken, isLoggedIn } from '../utils/auth'
 import router from '../router'
 import { useRoute } from 'vue-router'
 
-const url = 'http://127.0.0.1:8000/storage/products/'
+const url = 'https://imt.mma.my.id/storage/products/'
 const products = ref([])
 const categories = ref([])
 const selectedCategories = ref([])
