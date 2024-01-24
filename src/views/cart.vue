@@ -132,7 +132,7 @@ onMounted(async () => {
 })
 
 const total = computed(() => {
-    return items.value.reduce((total, item) => total + item.sub_total, 0)
+    return items.value.reduce((total, item) => Number(total) + Number(item.sub_total), 0)
 })
 
 const setItems = async () => {

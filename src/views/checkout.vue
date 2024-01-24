@@ -125,11 +125,11 @@ const checkoutClick = async () => {
 }
 
 const subTotal = computed(() => {
-    return items.value.reduce((subTotal, item) => subTotal + item.sub_total, 0)
+    return items.value.reduce((subTotal, item) => Number(subTotal) + Number(item.sub_total), 0)
 })
 
 const pajak = computed(() => {
-    return subTotal.value * 0.1
+    return Number(subTotal.value * 0.1)
 })
 
 const kirim = computed(() => {
@@ -137,7 +137,7 @@ const kirim = computed(() => {
 })
 
 const total = computed(() => {
-    return subTotal.value + pajak.value + kirim.value
+    return Number(subTotal.value + pajak.value + kirim.value)
 })
 
 const getCurrentDateTime = () => {
